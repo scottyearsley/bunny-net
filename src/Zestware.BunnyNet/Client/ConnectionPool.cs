@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using RabbitMQ.Client;
 using RabbitMQ.Client.Exceptions;
 using Zestware;
 using Zestware.Data;
@@ -11,10 +10,11 @@ internal static class ConnectionPool
     private static readonly ReaderWriterLockSlim ConnectionLock = new();
     private static readonly Dictionary<string, IConnection> Connections = new();
 
+    public static int ConnectionCount => Connections.Count;
+
     public static IConnection Get(BunnyConfiguration configuration)
     {
         // TODO: Review whether ConcurrentDictionary is better here (and simpler)
-        
         string connectionHash;
         
         ConnectionLock.EnterReadLock();
@@ -69,8 +69,8 @@ internal static class ConnectionPool
 
         var initialConnectionAttemptDateTime = DateTime.Now;
         Exception? exception = null;
-            
-        //this.Log().Info("Attempting initial rabbit connection");
+
+        // this.Log().Info("Attempting initial rabbit connection");
 
         while (DateTime.Now - initialConnectionAttemptDateTime < TimeSpan.FromMinutes(1))
         {

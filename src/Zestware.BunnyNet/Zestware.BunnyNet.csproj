@@ -9,7 +9,6 @@
 
     <ItemGroup>
       <PackageReference Include="RabbitMQ.Client" Version="6.4.0" />
-      <PackageReference Include="zestware.core" Version="1.0.0" />
+      <PackageReference Include="zestware.core" Version="1.0.1" />
     </ItemGroup>
-
 </Project>
